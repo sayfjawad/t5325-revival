@@ -237,10 +237,15 @@ def main():
 
         if args.root_password:
             print("[*] Resetting the root password too...", file=sys.stderr)
-            import crypt
             import secrets
+            import subprocess
             salt = secrets.token_hex(4)[:8]
-            new_hash = crypt.crypt(args.root_password, f"$1${salt}$")
+            # MD5-crypt ($1$) via openssl: Python's crypt module was removed in 3.13,
+            # and these old devices' libc understands $1$ hashes.
+            new_hash = subprocess.run(
+                ["openssl", "passwd", "-1", "-salt", salt, "-stdin"],
+                input=args.root_password, capture_output=True, text=True, check=True,
+            ).stdout.strip()
             escaped_hash = new_hash.replace("$", r"\$")
             shadow_path = f"{args.writable_root}/etc/shadow"
             send_cmd(fd,
