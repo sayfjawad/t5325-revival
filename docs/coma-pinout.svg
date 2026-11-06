@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320" font-family="monospace">
+  <rect width="560" height="320" fill="#ffffff"/>
+  <text x="280" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#111">HP t5325 — COMA serial header</text>
+  <text x="280" y="58" text-anchor="middle" font-size="13" fill="#555">4-pin micro-JST, 1.25 mm pitch · TTL 3.3 V · 115200 8N1</text>
+
+  <!-- connector body -->
+  <rect x="120" y="110" width="320" height="90" rx="8" fill="#eef1f4" stroke="#333" stroke-width="2"/>
+  <!-- pin 1 marker -->
+  <text x="120" y="104" font-size="12" fill="#777">pin 1</text>
+  <polygon points="130,108 142,108 136,118" fill="#777"/>
+
+  <!-- pins -->
+  <g font-size="15" font-weight="bold" text-anchor="middle">
+    <!-- pin 1 GND -->
+    <rect x="150" y="135" width="40" height="40" rx="4" fill="#444"/>
+    <text x="170" y="161" fill="#fff">1</text>
+    <text x="170" y="225" fill="#111">GND</text>
+    <text x="170" y="248" font-weight="normal" font-size="12" fill="#666">ground</text>
+
+    <!-- pin 2 RxD -->
+    <rect x="230" y="135" width="40" height="40" rx="4" fill="#1f77b4"/>
+    <text x="250" y="161" fill="#fff">2</text>
+    <text x="250" y="225" fill="#111">RxD</text>
+    <text x="250" y="248" font-weight="normal" font-size="12" fill="#666">board in</text>
+
+    <!-- pin 3 TxD -->
+    <rect x="310" y="135" width="40" height="40" rx="4" fill="#2ca02c"/>
+    <text x="330" y="161" fill="#fff">3</text>
+    <text x="330" y="225" fill="#111">TxD</text>
+    <text x="330" y="248" font-weight="normal" font-size="12" fill="#666">board out</text>
+
+    <!-- pin 4 3V3 -->
+    <rect x="390" y="135" width="40" height="40" rx="4" fill="#d62728"/>
+    <text x="410" y="161" fill="#fff">4</text>
+    <text x="410" y="225" fill="#111">3V3</text>
+    <text x="410" y="248" font-weight="normal" font-size="12" fill="#666">do NOT wire</text>
+  </g>
+
+  <!-- wiring note -->
+  <text x="280" y="285" text-anchor="middle" font-size="13" fill="#111">
+    Adapter wiring (crossover): GND&#8596;GND · board TxD&#8594;adapter RxD · board RxD&#8594;adapter TxD
+  </text>
+  <text x="280" y="306" text-anchor="middle" font-size="12" fill="#a00">
+    Leave 3V3 unconnected — the board powers itself; feeding 3V3 in can backfeed/damage it.
+  </text>
+</svg>

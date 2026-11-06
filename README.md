@@ -35,17 +35,31 @@ had a chance to start.
 ## Opening the hardware door
 
 Inside, on the motherboard, there's a small 4-pin header (ours was labelled **COMA**):
-`3V3 / TXD / RXD / GND`, a micro-JST 1.25mm connector. That's a UART — a dumb,
-decades-old serial port, 115200 baud, 3.3V logic. A $5 USB-to-serial adapter (CP2102 or
-FTDI chipsets are the common, reliable ones) plus a matching 4-pin pigtail cable is all
-you need. Wire it crossed:
+a micro-JST **1.25mm** connector. That's a UART — a dumb, decades-old serial port,
+115200 baud, **3.3V TTL** logic (not RS-232 — a raw PC serial port's ±12V will damage
+it). A $5 USB-to-serial adapter (CP2102 or FTDI chipsets are the common, reliable ones)
+plus a matching 4-pin pigtail cable is all you need.
 
-| Thin client header | → | USB-serial adapter |
+![COMA header pinout: pin 1 GND, pin 2 RxD, pin 3 TxD, pin 4 3V3; 1.25mm micro-JST, 3.3V TTL, 115200 8N1](docs/coma-pinout.svg)
+
+Pin order on our board, starting from the pin-1 end of the header:
+
+| Pin | Signal | Wire to USB-serial adapter |
 |---|---|---|
-| GND | → | GND |
-| TXD | → | RXD |
-| RXD | → | TXD |
-| 3V3 | → | **leave disconnected** — don't power the board from the USB adapter |
+| 1 | GND | GND |
+| 2 | RxD (board input)  | adapter **TxD** |
+| 3 | TxD (board output) | adapter **RxD** |
+| 4 | 3V3 | **leave disconnected** — don't power the board from the USB adapter |
+
+In other words, wire it crossed: GND↔GND, and the board's TxD into the adapter's RxD and
+vice-versa. The `1` next to the header on the PCB marks pin 1; if your board's silkscreen
+differs, confirm pin 1 before wiring. 1.25mm is easy to get wrong when ordering — "micro
+JST" plugs also ship in 1.0, 1.5 and 2.0mm pitches, so check the spacing.
+
+> Pinout, pitch and voltage cross-checked against David Parkinson's teardown of this exact
+> board at [parkytowers.me.uk](https://www.parkytowers.me.uk/thin/hp/t5325/uboot.shtml) —
+> a great reference with his own photo of the header. The diagram above is an original
+> redrawing of the facts, not his image.
 
 Plug it into any Linux (or Mac/Windows with the right driver) machine, open a terminal
 emulator at 115200 8N1 (`picocom`, `minicom`, `screen /dev/ttyUSB0 115200`), and power the
